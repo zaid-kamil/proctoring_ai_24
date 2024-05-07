@@ -1,0 +1,413 @@
+{% extends 'base.html' %}
+{% block js %}{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section">
+    <div class="hero-bg">
+        <img src="/static/img/hero-bg-light.webp" alt="">
+    </div>
+    <!-- sidebar -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Admin Dashboard</h1>
+                <p>Welcome to the admin dashboard</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="/admin" class="list-group-item list-group-item-action">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal"
+                        data-bs-target="#addUserModal">
+                        <i class="bi bi-person-plus"></i> Add User
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal"
+                        data-bs-target="#addExamModal">
+                        <i class="bi bi-file-earmark-text"></i>
+                        New Exams
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal"
+                        data-bs-target="#addQuestionModal">
+                        <i class="bi bi-question-circle"></i>
+                        Add Questions
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal"
+                        data-bs-target="#viewProctorLogsModal">
+                        <i class="bi bi-journal-text"></i>
+                        Proctor Logs
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- cards for showing counts -->
+                        <div class="col-md-3">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Users</h5>
+                                    <p class="card-text">Total Users: 10</p>
+                                    <a href="#" class="btn btn-light" data-bs-toggle="modal"
+                                        data-bs-target="#viewUsersModal">Manage</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <!-- exams -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Exams</h5>
+                                    <p class="card-text">Total Exams: 2</p>
+                                    <a href="#" class="btn btn-light" data-bs-toggle="modal"
+                                        data-bs-target="#viewExamsModal">Manage</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <!-- questions -->
+                            <!-- exams -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Questions</h5>
+                                    <p class="card-text">Total Exams: 20</p>
+                                    <a href="#" class="btn btn-light" data-bs-toggle="modal"
+                                        data-bs-target="#viewQuestionsModal">Manage</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- add user modal-->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="addUserModalBody">
+                    <form id="addUserForm" action="/add_user" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="surname" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="surname" name="surname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="student">Student</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD exam model -->
+    <div class="modal fade" id="addExamModal" tabindex="-1" aria-labelledby="addExamModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExamModalLabel">Add Exam</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="addExamModalBody">
+                    <form id="addExamForm" action="/add_exam" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Exam Title</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="duration" class="form-label">Exam Duration</label>
+                            <input type="number" class="form-control" id="duration" name="duration" min="10" max="1000"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="total_score" class="form-label">Total score</label>
+                            <input type="number" class="form-control" id="total_score" name="total_score" min="10"
+                                max="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passing_score" class="form-label">Passing Score</label>
+                            <input type="number" class="form-control" id="passing_score" name="passing_score" min="5"
+                                max="999" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Exam</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Question with exam_id, question, option_a, option_b, option_c, option_d, correct_option, marks -->
+    <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addQuestionModalLabel">Add Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="addQuestionModalBody">
+
+                    {% if exams %}
+                    <form id="addQuestionForm" action="/add_question" method="post">
+                        <div class="mb-3">
+                            <label for="exam_id" class="form-label">Exam</label>
+                            <select class="form-select" id="exam_id" name="exam_id" required>
+
+                                {% for item in exams %}
+                                <option value="{{ item.id }}">{{ item.name }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="question" class="form-label">Question</label>
+                            <input type="text" class="form-control" id="question" name="question" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="option_a" class="form-label">Option A</label>
+                            <input type="text" class="form-control" id="option_a" name="option_a" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="option_b" class="form-label">Option B</label>
+                            <input type="text" class="form-control" id="option_b" name="option_b" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="option_c" class="form-label">Option C</label>
+                            <input type="text" class="form-control" id="option_c" name="option_c" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="option_d" class="form-label">Option D</label>
+                            <input type="text" class="form-control" id="option_d" name="option_d" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correct_option" class="form-label">Correct Option</label>
+                            <input type="text" class="form-control" id="correct_option" name="correct_option" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marks" class="form-label">Marks</label>
+                            <input type="number" class="form-control" id="marks" name="marks" min="1" max="100"
+                                value="10" required>
+
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Question</button>
+                    </form>
+                    {% else %}
+                    <p>No exams found, create exams first</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View proctor logs with user_id, exam_id, attempt_id, recording, status in a model-->
+    <div class="modal fade" id="viewProctorLogsModal" tabindex="-1" aria-labelledby="viewProctorLogsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewProctorLogsModalLabel">Proctor Logs</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="viewProctorLogsModalBody">
+                    {% if proctorlogs %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Exam</th>
+                                <th scope="col">Attempt</th>
+                                <th scope="col">Recording</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in proctorlogs %}
+                            <tr>
+                                <th scope="row">
+                                    {{ loop.index }}
+                                </th>
+                                <td>{{ item.user_id }}</td>
+                                <td>{{ item.exam_id }}</td>
+                                <td>{{ item.attempt_id }}</td>
+                                <td>{{ item.recording }}</td>
+                                <td>{{ item.status }}</td>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No proctor logs found</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View users -->
+    <div class="modal fade" id="viewUsersModal" tabindex="-1" aria-labelledby="viewUsersModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewUsersModalLabel">Users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="viewUsersModalBody">
+                    {% if users %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Surname</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in users %}
+                            <tr>
+                                <th scope="row">
+                                    {{ loop.index }}
+                                </th>
+                                <td>{{ item.username }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.surname }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.role }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No users found</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- view exams -->
+    <div class="modal fade" id="viewExamsModal" tabindex="-1" aria-labelledby="viewExamsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewExamsModalLabel">Exams</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="viewExamsModalBody">
+                    {% if exams %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Exam Title</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Total Score</th>
+                                <th scope="col">Passing Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in exams %}
+                            <tr>
+                                <th scope="row">
+                                    {{ loop.index }}
+                                </th>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.duration }}</td>
+                                <td>{{ item.total_score }}</td>
+                                <td>{{ item.passing_score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No exams found</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- view questions -->
+
+    <div class="modal fade" id="viewQuestionsModal" tabindex="-1" aria-labelledby="viewQuestionsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewQuestionsModalLabel">Questions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="viewQuestionsModalBody">
+                    {% if questions %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Exam</th>
+                                <th scope="col">Question</th>
+                                <th scope="col">Option A</th>
+                                <th scope="col">Option B</th>
+                                <th scope="col">Option C</th>
+                                <th scope="col">Option D</th>
+                                <th scope="col">Correct Option</th>
+                                <th scope="col">Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in questions %}
+                            <tr>
+                                <th scope="row">
+                                    {{ loop.index }}
+                                </th>
+                                <td>{{ item.exam_id }}</td>
+                                <td>{{ item.question }}</td>
+                                <td>{{ item.option_a }}</td>
+                                <td>{{ item.option_b }}</td>
+                                <td>{{ item.option_c }}</td>
+                                <td>{{ item.option_d }}</td>
+                                <td>{{ item.correct_option }}</td>
+                                <td>{{ item.marks }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No questions found</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section><!-- /Hero Section -->
+{% endblock %}
+{% block css %}{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block js %}{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section">
+    <div class="hero-bg">
+        <img src="/static/img/hero-bg-light.webp" alt="">
+    </div>
+    <div class="container ">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="col-md-4">
+                <h3 data-aos="fade-up" class="text-center">Create New Account </span></h3>
+                <form method="post" data-aos="fade-up">
+                    <div class="d-flex gap-2">
+                        <div class="form-group mb-3">
+                            <label for="name">First Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="surname">Last Name</label>
+                            <input type="text" class="form-control" id="surname" name="surname" required>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <div class="form-group mb-3">
+                            <label for="role">Role</label>
+                            <input type="text" class="form-control" id="role" name="role" disabled value="student">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <div class="form-group mb-3">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                    </div>
+                    <div class="text-center d-flex justify-content-between">
+                        <a type="submit" class="btn btn-outline-danger" href="/login">Login</a>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section><!-- /Hero Section -->
+{% endblock %}
+{% block css %}{% endblock %}

@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="hero" class="hero section my-3">
+    <div class="hero-bg">
+        <img src="/static/img/hero-bg-light.webp" alt="">
+    </div>
+    <div class="container ">
+        <div class="d-flex">
+            <div class="">
+                Time remaining :
+                <div id="safeTimerDisplay" class="text-danger display-5">
+                    00:00
+                </div>
+            </div>
+            <div class="ms-auto">
+                <a href="/dashboard" class="btn btn-danger">End Exam</a>
+            </div>
+        </div>
+        <div class="container px-4 py-5">
+            <h2 class="pb-2 border-bottom">
+                {{ exam.name }}
+            </h2>
+
+            <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+                <div class="col d-flex flex-column align-items-start gap-2">
+                    <h2 class="fw-bold text-body-emphasis">
+                        <span id="question">
+                            Paragraph of text beneath the heading to explain the heading. We'll
+                            add onto it with another sentence and probably just keep going until we run out of words.
+                        </span>
+                    </h2>
+                    <p class="text-body-secondary">
+                        <span id="marks">
+                            10
+                        </span> Marks
+                    </p>
+
+                </div>
+
+                <div class="col">
+                    <div class="row row-cols-1 row-cols-sm-2 g-4">
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            </div>
+                            <h4 class="fw-semibold mb-0 text-body-emphasis">
+                                Option 1
+                            </h4>
+                            <p class="text-body-secondary py-0">
+                                <span id="option1">
+                                    Paragraph of text beneath the heading to explain the heading.
+                                </span><br>
+                                <button class="btn btn-outline-primary confirmbtn">Select</button>
+                            </p>
+                            <!-- choose -->
+                        </div>
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            </div>
+                            <h4 class="fw-semibold mb-0 text-body-emphasis">
+                                Option 2
+                            </h4>
+                            <p class="text-body-secondary py-0">
+                                <span id="option2">
+                                    Paragraph of text beneath the heading to explain the heading.
+                                </span><br>
+                                <button class="btn btn-outline-primary confirmbtn">Select</button>
+                            </p>
+                        </div>
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            </div>
+                            <h4 class="fw-semibold mb-0 text-body-emphasis">
+                                Option 3
+                            </h4>
+                            <p class="text-body-secondary py-0">
+                                <span id="option3">
+                                    Paragraph of text beneath the heading to explain the heading.
+                                </span><br>
+                                <button class="btn btn-outline-primary confirmbtn">Select</button>
+                            </p>
+                        </div>
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            </div>
+                            <h4 class="fw-semibold mb-0 text-body-emphasis">
+                                Option 4
+                            </h4>
+                            <p class="text-body-secondary py-0">
+                                <span id="option4">
+                                    Paragraph of text beneath the heading to explain the heading.
+                                </span><br>
+                                <button class="btn btn-outline-primary confirmbtn">Select</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+{% endblock %}
+{% block css %}{% endblock %}
+
+{% block js %}
+<script>
+    function startTimer(duration, display) {
+        var timer = duration, hours, minutes, seconds;
+        setInterval(function () {
+            hours = parseInt(timer / 3600, 10)
+            minutes = parseInt((timer % 3600) / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = hours + ":" + minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                // show a non blocking alert
+                alert('Exam Completed');
+                window.location.href = '/dashboard';
+            }
+        }, 1000);
+    }
+    //  disable right click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    // disable F12 key
+    document.onkeypress = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 123) {
+            return false;
+        }
+    }
+
+    // disable f5
+    document.onkeydown = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 116) {
+            event.preventDefault();
+        }
+    }
+
+    // show confirm alert on reload 
+    window.onbeforeunload = function () {
+        return "Data will be lost if you leave the page, are you sure?";
+    };
+
+    function loadQuestion(counter, examId) {
+        // load question and options using url /exam/1/question/1
+        fetch(`/exam/${examId}/question/${counter}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                counter++;
+                document.querySelector('#question').textContent = data.question;
+                document.querySelector('#option1').textContent = data.option_a;
+                document.querySelector('#option2').textContent = data.option_b;
+                document.querySelector('#option3').textContent = data.option_c;
+                document.querySelector('#option4').textContent = data.option_b;
+                document.querySelector('#marks').textContent = data.marks;
+            });
+    }
+
+    window.onload = function () {
+        var totalQuestions = parseInt(`{{ total_questions }}`);
+        var counter = 1;
+        var examId = parseInt(`{{ exam.id }}`);
+        var video_path = `{{ video_path }}`;
+        const duration = parseInt(`{{ exam.duration }}`) * 60;
+        var time = 60 / 2, // your time in seconds here
+            display = document.querySelector('#safeTimerDisplay');
+        startTimer(duration, display);
+        loadQuestion(counter, examId);
+        document.querySelectorAll('.confirmbtn').forEach(item => {
+            // submit answer
+            item.addEventListener('click', event => {
+                console.log('clicked');
+                // submit answer using url /exam/1/question/1
+                fetch(`/exam/${examId}/question/${counter}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        answer: item.previousElementSibling.textContent,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        counter++;
+                        if (counter <= totalQuestions) {
+                            loadQuestion(counter, examId);
+                        } else {
+                            // show a non blocking alert
+                            setTimeout(() => {
+                                alert('Exam Completed');
+                                window.location.href = `/exam/${examId}/save?path=${video_path}`;
+                            }, 1000);
+                        }
+                    });
+            });
+        });
+
+    };
+
+</script>
+{% endblock %}

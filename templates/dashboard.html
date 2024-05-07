@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block js %}{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section">
+    <div class="hero-bg">
+        <img src="/static/img/hero-bg-light.webp" alt="">
+    </div>
+    <div class="container ">
+        <!-- exam cards -->
+        <div class="col-md-6">
+            <h3>
+                <span class="text-primary">Proctored Exams</span>
+            </h3>
+            <div class="container-fluid">
+                <div class="row">
+                    {% for item in exams %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.name }}</h5>
+                                <p class="card-text">{{ item.duration }} mins</p>
+                                <a href="/exam/{{ item.id }}" class="btn btn-primary">Start Proctored Exam </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                <span class="text-success">Attempts Exams</span>
+            </h3>
+            <div class="container-fluid">
+                <div class="row">
+                    {% if attempts %}
+                    {% for item in attempts %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.exam.name }}</h5>
+                                <p class="card-text">{{ item.score }} marks</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">No Attempts Exams</h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- /Hero Section -->
+{% endblock %}
+{% block css %}{% endblock %}

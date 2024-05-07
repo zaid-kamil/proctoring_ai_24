@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block js %}{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section">
+    <div class="hero-bg">
+        <img src="/static/img/hero-bg-light.webp" alt="">
+    </div>
+    <div class="container ">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="col-md-4">
+                <h1 data-aos="fade-up" class="text-center">Login </span></h1>
+                <form action="/login" method="post" data-aos="fade-up">
+                    <div class="form-group mb-3">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="form-group form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <div class="text-center d-flex justify-content-between">
+                        <a type="submit" class="btn btn-outline-danger" href="/register">Register</a>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section><!-- /Hero Section -->
+{% endblock %}
+{% block css %}{% endblock %}

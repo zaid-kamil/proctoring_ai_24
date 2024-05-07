@@ -1,0 +1,7 @@
+flask
+sqlalchemy
+ultralytics
+mediapipe
+opencv-contrib-python
+lapx>=0.5.2
+shapely>=2.0.0
